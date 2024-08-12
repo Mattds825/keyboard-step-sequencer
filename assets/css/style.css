@@ -1,89 +1,125 @@
-:root{
-    --color-bg: #1e2328;
-    --color-grey-1: #2a2e34;
-    --color-grey-2: #4e5765;
-    --color-yellow-1: #C07F00;
-    --color-yellow-2: #FFD95A;
-    --color-yellow-3: #FFF7D4;
+:root {
+  --color-bg: #1e2328;
+  --color-grey-1: #2a2e34;
+  --color-grey-2: #4e5765;
+  --color-yellow-1: #c09a00;
+  --color-yellow-2: #ffd95a;
+  --color-yellow-3: #fff7d4;
+
+  --color-red-1: #8b2e33; /* Dark Red */
+  --color-red-2: #a63d40; /* Base Red */
+  --color-red-3: #c95c5f; /* Light Red */
+
+  --color-green-1: #3d5d3d; /* Dark Green */
+  --color-green-2: #4c7a4f; /* Base Green */
+  --color-green-3: #72a176; /* Light Green */
 }
 
 body {
-    background-color: var(--color-bg);
-    color: white;
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
+  background-color: var(--color-bg);
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
 }
 
-#main-content{
-    display: none;
+#main-content {
+  display: none;
 }
 
 .sequencer {
-    /* display: grid; */
-    display: none;
-    grid-template-columns: repeat(16, 30px);
-    gap: 5px;
+  /* display: grid; */
+  display: none;
+  grid-template-columns: repeat(16, 30px);
+  gap: 5px;
 }
 
 .track {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
 }
 .steps {
-    display: grid;
-    grid-template-columns: repeat(16, 30px);
-    gap: 5px;
+  display: grid;
+  grid-template-columns: repeat(16, 30px);
+  gap: 5px;
 }
 
 .step {
-    width: 30px;
-    height: 30px;
-    background-color: var(--color-grey-1);
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--color-yellow-3);
+  width: 30px;
+  height: 30px;
+  background-color: var(--color-grey-1);
+  color: var(--color-yellow-3);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-yellow-3);
 }
 
 .step.alt {
-    background-color: var(--color-grey-2);
+  background-color: var(--color-grey-2);
 }
 
 .step.active {
-    background-color: var(--color-yellow-1);
-    color: var(--color-bg);
+  background-color: var(--color-yellow-1);
+  color: var(--color-bg);
 }
 
 .step.alt.active {
-    background-color: var(--color-yellow-2);
-    color: var(--color-bg);
-    
+  background-color: var(--color-yellow-2);
+  color: var(--color-bg);
 }
 
 .track-label {
-    grid-column: span 16;
-    text-align: left;
-    font-weight: bold;
-    margin-bottom: 10px;
+  grid-column: span 16;
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 button {
-    margin: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+  margin: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: var(--color-grey-2);
+  color: var(--color-yellow-3);
+  border: 1px solid var(--color-yellow-3);
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: var(--color-grey-1);
 }
 
 .slider-container {
-    margin: 20px 0;
-    text-align: center;
+  margin: 20px 0;
+  text-align: center;
 }
 .slider {
-    width: 300px;
+  width: 300px;
+}
+
+#stop-btn.active {
+  background-color: var(--color-red-1);
+}
+#stop-btn.active:hover {
+  background-color: var(--color-red-2);
+}
+
+#play-btn.active {
+  background-color: var(--color-green-1);
+}
+
+#play-btn.active:hover {
+  background-color: var(--color-green-2);
+}
+
+#track-controls {
+  display: flex;
+  justify-content: center;
 }

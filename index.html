@@ -9,6 +9,7 @@
   <body>
     <button id="start-btn">Start Audio Context</button>
     <main id="main-content">
+      <h1>QWRT-SEQ-01</h1>
       <div id="effect-container">
         <div class="slider-container">
           <label for="filterSlider">Low Pass Filter Frequency:</label>
@@ -44,7 +45,7 @@
           />
         </div>
       </div>
-
+      <!-- Sequencer -->
       <div id="sequencer" class="sequencer">
         <div class="track" id="kick-track">
           <div class="track-label">Kick</div>
@@ -61,8 +62,11 @@
           <div class="track-label">Cymbal</div>
         </div>
       </div>
-      <button id="play-btn">Play</button>
-      <button id="stop-btn">Stop</button>
+      <!-- Track Controls -->
+      <div id="track-controls">
+        <button id="play-btn">Play</button>
+        <button id="stop-btn" class="active">Stop</button>
+      </div>
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.37/Tone.js"></script>
