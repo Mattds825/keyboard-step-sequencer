@@ -1,0 +1,59 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+.sequencer {
+    /* display: grid; */
+    display: none;
+    grid-template-columns: repeat(16, 30px);
+    gap: 5px;
+}
+
+.track {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+.steps {
+    display: grid;
+    grid-template-columns: repeat(16, 30px);
+    gap: 5px;
+}
+
+.step {
+    width: 30px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.step.active {
+    background-color: #4caf50;
+}
+.track-label {
+    grid-column: span 16;
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+button {
+    margin: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.slider-container {
+    margin: 20px 0;
+    text-align: center;
+}
+.slider {
+    width: 300px;
+}
