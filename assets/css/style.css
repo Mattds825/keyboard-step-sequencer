@@ -5,6 +5,11 @@ body {
     align-items: center;
     margin-top: 50px;
 }
+
+#main-content{
+    display: none;
+}
+
 .sequencer {
     /* display: grid; */
     display: none;

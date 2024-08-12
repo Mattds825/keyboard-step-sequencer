@@ -35,6 +35,7 @@ cymbal.connect(bitcrusher);
 
 const startBtn = document.getElementById('start-btn');
 const sequencer = document.getElementById('sequencer');
+const mainContentContainer = document.getElementById('main-content');
 
 const kickTrack = document.getElementById("kick-track");
 const snareTrack = document.getElementById("snare-track");
@@ -56,6 +57,13 @@ const tracks = [
     { name: 'Cymbal', sound: cymbal, trackDivName: "cymbal-track" }
 ];
 
+const keyMap = {
+    '1': 0, '2': 1, '3': 2, '4': 3, 
+    '5': 4, '6': 5, '7': 6, '8': 7, 
+    '!': 8, '@': 9, '#': 10, '$': 11, 
+    '%': 12, '^': 13, '&': 14, '*': 15
+};
+
 function createTrack(name, soundName, trackDivName){
      const trackDiv = document.getElementById(trackDivName);
  
@@ -71,8 +79,9 @@ function createTrack(name, soundName, trackDivName){
          step.dataset.step = i;
          step.addEventListener('click', function() {
              const stepIndex = parseInt(this.dataset.step);
-             steps[soundName][stepIndex] = !steps[soundName][stepIndex];
-             this.classList.toggle('active');
+            //  steps[soundName][stepIndex] = !steps[soundName][stepIndex];
+            //  this.classList.toggle('active');
+            toggleStep(soundName, stepIndex);
          });
          stepsDiv.appendChild(step);
      }
@@ -88,21 +97,35 @@ startBtn.addEventListener('click', async () => {
     await Tone.start();
     console.log('Audio context started');
     sequencer.style.display = "block";
+    mainContentContainer.style.display = "block";
     // piano.style.display = "flex";
     startBtn.style.display = "none";
     tracks.forEach(track => createTrack(track.name, track.name.toLowerCase(), track.trackDivName));
 });
 
-// Handle step click
-document.querySelectorAll('.step').forEach(step => {
-    step.addEventListener('click', function() {
-        const sound = this.dataset.sound;
-        const stepIndex = parseInt(this.dataset.step);
+// // Handle step click
+// document.querySelectorAll('.step').forEach(step => {
+//     step.addEventListener('click', function() {
+//         toggleStep(soundName, step.dataset.step);
+//     });
+// });
 
-        steps[sound][stepIndex] = !steps[sound][stepIndex];
-        this.classList.toggle('active');
+// Function to toggle a step
+function toggleStep(trackName, stepIndex) {
+    steps[trackName][stepIndex] = !steps[trackName][stepIndex];
+
+    // Find the correct track label and toggle the step in that track
+    const trackDivs = document.querySelectorAll('.track');
+    trackDivs.forEach(trackDiv => {
+        const label = trackDiv.querySelector('.track-label');
+        if (label.innerText.toLowerCase() === trackName) {
+            const stepDiv = trackDiv.querySelector(`.steps .step:nth-child(${stepIndex + 1})`);
+            if (stepDiv) {
+                stepDiv.classList.toggle('active');
+            }
+        }
     });
-});
+}
 
 // Sequence
 const seq = new Tone.Sequence((time, col) => {
@@ -144,4 +167,12 @@ document.getElementById('bitcrusherSlider').addEventListener('input', (event) =>
 document.getElementById('distortionSlider').addEventListener('input', (event) => {
     const distortionAmount = event.target.value;
     distortion.distortion = distortionAmount;
+});
+
+// Keyboard listener
+document.addEventListener('keydown', (event) => {
+    const stepIndex = keyMap[event.key];
+    if (stepIndex !== undefined) {
+        toggleStep('kick', stepIndex);
+    }
 });
