@@ -29,10 +29,10 @@ const distortion = new Tone.Distortion({
 // bitcrusher.chain(distortion, filter, Tone.Destination);
 
 //connect sound to filter
-kick.chain(bitcrusher, distortion, filter, Tone.Destination);
-snare.chain(bitcrusher, distortion, filter, Tone.Destination);
-hat.chain(bitcrusher, distortion, filter, Tone.Destination);
-cymbal.chain(bitcrusher, distortion, filter, Tone.Destination);
+kick.chain(distortion, filter, Tone.Destination);
+snare.chain(distortion, filter, Tone.Destination);
+hat.chain(distortion, filter, Tone.Destination);
+cymbal.chain(distortion, filter, Tone.Destination);
 
 const startBtn = document.getElementById("start-btn");
 const sequencer = document.getElementById("sequencer");
@@ -45,6 +45,8 @@ const kickTrack = document.getElementById("kick-track");
 const snareTrack = document.getElementById("snare-track");
 const hatTrack = document.getElementById("hat-track");
 const cymbalTrack = document.getElementById("cymbal-track");
+
+let isBpmFocused = false;
 
 // Track steps configuration
 const steps = {
@@ -361,8 +363,26 @@ bpmInput.addEventListener("input", (event) => {
   Tone.Transport.bpm.value = bpm;
 });
 
+// listen to bpm input onfocus 
+bpmInput.addEventListener("focus", (event) => {
+  isBpmFocused = true;
+});
+
+// listen to bpm input onblur
+bpmInput.addEventListener("blur", (event) => {
+  isBpmFocused = false;
+});
+
 // Keyboard listener
 document.addEventListener("keydown", (event) => {
+  if(isBpmFocused) {
+    //if user htis enter key, blur the input
+    if(event.code === 'Enter'){
+      bpmInput.blur();
+      isBpmFocused = false;
+    }
+    return;
+  };
   if (event.code === 'Space') {
     if(isPlaying){
         stopPlayback();
