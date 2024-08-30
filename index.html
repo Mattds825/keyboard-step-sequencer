@@ -12,6 +12,10 @@
       <h1>QWRT-SEQ-01</h1>
       <div id="effect-container">
         <div class="slider-container">
+          <label for='bpmInput'>BPM:</label>
+        <input type='number' id='bpm-input' min="10" max="240" value='120' />
+        </div>
+        <div class="slider-container">
           <label for="filterSlider">Low Pass Filter Frequency:</label>
           <input
             type="range"
@@ -22,7 +26,7 @@
             value="5000"
           />
         </div>
-        <div class="slider-container">
+        <!-- <div class="slider-container">
           <label for="bitcrusherSlider">Bitcrusher Depth:</label>
           <input
             type="range"
@@ -32,7 +36,7 @@
             max="8"
             value="2"
           />
-        </div>
+        </div> -->
         <div class="slider-container">
           <label for="distortionSlider">Distortion:</label>
           <input

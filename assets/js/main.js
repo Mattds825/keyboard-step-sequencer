@@ -16,7 +16,7 @@ const filter = new Tone.Filter({
 //bitcrusher effect
 const bitcrusher = new Tone.BitCrusher({
   bits: 8,
-  // wet: 0.5,
+  wet: 0.5,
 });
 
 // distortion effect
@@ -26,19 +26,20 @@ const distortion = new Tone.Distortion({
 });
 
 // Chain the effects together and connect them to the destination
-bitcrusher.chain(distortion, filter, Tone.Destination);
+// bitcrusher.chain(distortion, filter, Tone.Destination);
 
 //connect sound to filter
-kick.connect(bitcrusher);
-snare.connect(bitcrusher);
-hat.connect(bitcrusher);
-cymbal.connect(bitcrusher);
+kick.chain(bitcrusher, distortion, filter, Tone.Destination);
+snare.chain(bitcrusher, distortion, filter, Tone.Destination);
+hat.chain(bitcrusher, distortion, filter, Tone.Destination);
+cymbal.chain(bitcrusher, distortion, filter, Tone.Destination);
 
 const startBtn = document.getElementById("start-btn");
 const sequencer = document.getElementById("sequencer");
 const mainContentContainer = document.getElementById("main-content");
 const playBtn = document.getElementById("play-btn");
 const stopBtn = document.getElementById("stop-btn");
+const bpmInput = document.getElementById("bpm-input");
 
 const kickTrack = document.getElementById("kick-track");
 const snareTrack = document.getElementById("snare-track");
@@ -336,14 +337,14 @@ document.getElementById("filterSlider").addEventListener("input", (event) => {
 });
 
 // Bitcrusher slider
-document
-  .getElementById("bitcrusherSlider")
-  .addEventListener("input", (event) => {
-    const bits = event.target.value;
-    bitcrusher.bits = bits;
-    // const wet = event.target.value/100;
-    // bitcrusher.wet = wet;
-  });
+// document
+//   .getElementById("bitcrusherSlider")
+//   .addEventListener("input", (event) => {
+//     const bits = event.target.value;
+//     bitcrusher.bits = bits;
+//     // const wet = event.target.value/100;
+//     // bitcrusher.wet = wet;
+//   });
 
 // Distortion slider
 document
@@ -352,6 +353,13 @@ document
     const distortionAmount = event.target.value;
     distortion.distortion = distortionAmount;
   });
+
+
+// listen to bpm input changes
+bpmInput.addEventListener("input", (event) => {
+  const bpm = event.target.value;
+  Tone.Transport.bpm.value = bpm;
+});
 
 // Keyboard listener
 document.addEventListener("keydown", (event) => {
