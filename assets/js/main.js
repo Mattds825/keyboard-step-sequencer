@@ -4,7 +4,9 @@ const snare = new Tone.Player("assets/sounds/snare.wav");
 const hat = new Tone.Player("assets/sounds/hat.wav");
 const cymbal = new Tone.Player("assets/sounds/crash.wav");
 
-var isPlaying = false;
+let isPlaying = false;
+let isBpmFocused = false;
+let audioContextStarted = false;
 
 //low-pass filter
 const filter = new Tone.Filter({
@@ -46,7 +48,6 @@ const snareTrack = document.getElementById("snare-track");
 const hatTrack = document.getElementById("hat-track");
 const cymbalTrack = document.getElementById("cymbal-track");
 
-let isBpmFocused = false;
 
 // Track steps configuration
 const steps = {
@@ -263,8 +264,10 @@ function createTrack(name, soundName, trackDivName) {
   sequencer.appendChild(trackDiv);
 }
 
+// Start audio context
 startBtn.addEventListener("click", async () => {
   await Tone.start();
+  audioContextStarted = true;
   console.log("Audio context started");
   sequencer.style.display = "block";
   mainContentContainer.style.display = "block";
@@ -375,12 +378,17 @@ bpmInput.addEventListener("blur", (event) => {
 
 // Keyboard listener
 document.addEventListener("keydown", (event) => {
+  if(!audioContextStarted){
+    if(event.code === 'Enter'){
+      startBtn.click();
+    }
+  }
   if(isBpmFocused) {
     //if user htis enter key, blur the input
-    if(event.code === 'Enter'){
+    if(event.code === 'Enter' || event.key === '/'){
       bpmInput.blur();
       isBpmFocused = false;
-    }
+    }    
     return;
   };
   if (event.code === 'Space') {
@@ -389,6 +397,12 @@ document.addEventListener("keydown", (event) => {
     }else{
         startPlayback();
     }
+  }
+
+  //check if key is '/' and toggle the filter
+  if(event.key === '/'){
+    bpmInput.focus();
+    isBpmFocused = true;
   }
 
   const stepIndex = kickKeyMap[event.key];
